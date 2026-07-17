@@ -138,7 +138,7 @@ function App() {
                 </linearGradient>
               </defs>
             </svg>
-            SkyPulse
+            <span className="app-title-text">SkyPulse</span>
           </h1>
         </header>
 
