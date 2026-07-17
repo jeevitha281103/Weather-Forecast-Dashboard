@@ -2,21 +2,6 @@ import { Droplet, Wind, Gauge, Eye, Sunrise, Sunset, Cloud, Thermometer } from '
 import { getWindDirection } from '../utils/weatherHelpers';
 import './WeatherDetailsGrid.css';
 
-function toCelsius(kelvin) {
-  return kelvin - 273.15;
-}
-
-function toFahrenheit(kelvin) {
-  return (kelvin - 273.15) * 9 / 5 + 32;
-}
-
-function formatTemp(kelvin, unit) {
-  if (unit === 'imperial') {
-    return `${toFahrenheit(kelvin).toFixed(1)}°F`;
-  }
-  return `${toCelsius(kelvin).toFixed(1)}°C`;
-}
-
 const DetailItems = [
   {
     key: 'humidity',
@@ -26,10 +11,8 @@ const DetailItems = [
     iconColor: 'var(--center-primary)',
     getValue: (current) => `${current.main.humidity}%`,
     getDetail: (current) => {
-      const tempC = toCelsius(current.main.temp);
-      const humidity = current.main.humidity;
-      const dewPointC = tempC - (100 - humidity) / 5;
-      return `Dew point: ${dewPointC.toFixed(1)}°C`;
+      const dewPoint = current.main.temp - (100 - current.main.humidity) / 5;
+      return `Dew point: ${dewPoint.toFixed(1)}°C`;
     },
   },
   {
@@ -82,13 +65,8 @@ const DetailItems = [
     icon: Thermometer,
     iconBg: 'rgba(249, 115, 22, 0.15)',
     iconColor: '#f97316',
-    getValue: (current, unit) => formatTemp(current.main.temp, unit),
-    getDetail: (current, unit) => {
-      const feels = unit === 'imperial'
-        ? toFahrenheit(current.main.feels_like).toFixed(1)
-        : toCelsius(current.main.feels_like).toFixed(1);
-      return `Feels like ${feels}°`;
-    },
+    getValue: (current) => `${current.main.temp.toFixed(1)}°C`,
+    getDetail: (current) => `Feels like ${current.main.feels_like.toFixed(1)}°C`,
   },
   {
     key: 'uvIndex',

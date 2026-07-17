@@ -47,7 +47,7 @@ export const weatherApi = {
     if (!key) throw new Error('API key not configured');
 
     const currentRes = await fetchWithTimeout(
-      `${API_BASE}/weather?q=${encodeURIComponent(city)}&appid=${key}`
+      `${API_BASE}/weather?q=${encodeURIComponent(city)}&units=metric&appid=${key}`
     );
 
     if (!currentRes.ok) {
@@ -58,7 +58,7 @@ export const weatherApi = {
 
     const current = await currentRes.json();
     const forecastRes = await fetchWithTimeout(
-      `${API_BASE}/forecast?lat=${current.coord.lat}&lon=${current.coord.lon}&appid=${key}`
+      `${API_BASE}/forecast?lat=${current.coord.lat}&lon=${current.coord.lon}&units=metric&appid=${key}`
     );
     const forecast = forecastRes.ok ? await forecastRes.json() : null;
 
@@ -74,13 +74,13 @@ export const weatherApi = {
     if (!key) throw new Error('API key not configured');
 
     const currentRes = await fetchWithTimeout(
-      `${API_BASE}/weather?lat=${lat}&lon=${lon}&appid=${key}`
+      `${API_BASE}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${key}`
     );
     if (!currentRes.ok) throw new Error('Failed to fetch weather data');
     const current = await currentRes.json();
 
     const forecastRes = await fetchWithTimeout(
-      `${API_BASE}/forecast?lat=${lat}&lon=${lon}&appid=${key}`
+      `${API_BASE}/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${key}`
     );
     const forecast = forecastRes.ok ? await forecastRes.json() : null;
 

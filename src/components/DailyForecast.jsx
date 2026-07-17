@@ -30,8 +30,8 @@ export default function DailyForecast({ daily, unit, timezoneOffset }) {
       const dayName = isToday ? 'Today' : localDate.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' });
       const fullDate = localDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', timeZone: 'UTC' });
       const emoji = getWeatherEmoji(day.weather.id);
-      const tempMin = Math.round(unit === 'imperial' ? (day.temp_min - 273.15) * 9 / 5 + 32 : day.temp_min - 273.15);
-      const tempMax = Math.round(unit === 'imperial' ? (day.temp_max - 273.15) * 9 / 5 + 32 : day.temp_max - 273.15);
+      const tempMin = Math.round(unit === 'imperial' ? day.temp_min * 9 / 5 + 32 : day.temp_min);
+      const tempMax = Math.round(unit === 'imperial' ? day.temp_max * 9 / 5 + 32 : day.temp_max);
       return {
         ...day,
         dayName,

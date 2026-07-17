@@ -20,13 +20,6 @@ function getWeatherIcon(weatherId, isDay) {
   return weatherIcons[getWeatherType(weatherId)][isDay ? 'day' : 'night'];
 }
 
-function formatTemp(kelvin, unit) {
-  if (unit === 'imperial') {
-    return Math.round((kelvin - 273.15) * 9 / 5 + 32);
-  }
-  return Math.round(kelvin - 273.15);
-}
-
 export default function CurrentWeather({ data, unit = 'metric', timezoneOffset = 0 }) {
   const [isDay, setIsDay] = useState(true);
   const [animateIcon, setAnimateIcon] = useState(false);
@@ -46,10 +39,10 @@ export default function CurrentWeather({ data, unit = 'metric', timezoneOffset =
   const weatherId = weather.id;
   const main = weather.main;
   const description = weather.description;
-  const temp = formatTemp(data.main.temp, unit);
-  const feelsLike = formatTemp(data.main.feels_like, unit);
-  const tempMin = formatTemp(data.main.temp_min, unit);
-  const tempMax = formatTemp(data.main.temp_max, unit);
+  const temp = Math.round(data.main.temp);
+  const feelsLike = Math.round(data.main.feels_like);
+  const tempMin = Math.round(data.main.temp_min);
+  const tempMax = Math.round(data.main.temp_max);
   const cityName = data.name || 'Unknown';
   const country = data.sys.country || '';
   const unitSymbol = unit === 'imperial' ? 'F' : 'C';
